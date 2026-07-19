@@ -141,36 +141,36 @@
       }
       @keyframes wheel { 0%,100% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 60% { opacity: 1; transform: translate(-50%, 8px); } }
 
-      /* captions */
-      .captions {
-        position: absolute;
-        left: 50%; bottom: 4%;
-        transform: translateX(-50%);
-        width: min(560px, 88vw);
-        text-align: center;
-        z-index: 7;
-        pointer-events: none;
-      }
+      /* captions — appear on the side opposite the phone */
+      .captions { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
       .captions .cap {
         position: absolute;
-        left: 0; right: 0; bottom: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: clamp(280px, 32vw, 440px);
         margin: 0;
         opacity: 0;
         color: var(--white);
-        font-size: clamp(20px, 3.4vw, 34px);
-        font-weight: 600;
-        line-height: 1.28;
-        letter-spacing: -0.01em;
-        text-shadow: 0 2px 30px rgba(0,0,0,.6);
+        font-size: clamp(22px, 3vw, 40px);
+        font-weight: 700;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 34px rgba(0,0,0,.7);
       }
-      .captions .cap b { color: var(--green); font-weight: 600; }
+      .cap.side-right { right: clamp(26px, 6vw, 96px); text-align: left; }
+      .cap.side-left  { left: clamp(26px, 6vw, 96px);  text-align: left; }
+      .cap.side-center {
+        left: 50%; width: min(600px, 88vw);
+        transform: translate(-50%, -50%); text-align: center;
+      }
+      .captions .cap b { color: var(--green); font-weight: 700; }
 
       /* pets */
       .pet { position: absolute; bottom: 0; z-index: 3; color: var(--green); opacity: 0; }
-      .pet svg { display: block; filter: drop-shadow(0 8px 40px rgba(77,184,125,.25)); }
-      .dog { left: clamp(-40px, 3vw, 90px); width: clamp(190px, 20vw, 300px); }
-      .cat { right: clamp(-30px, 3vw, 90px); width: clamp(170px, 18vw, 270px); }
-      .pet .fill { fill: var(--green); fill-opacity: .2; stroke: var(--green); stroke-opacity: .62; stroke-width: 2; }
+      .pet svg { display: block; filter: drop-shadow(0 8px 40px rgba(77,184,125,.22)); }
+      .dog { left: 0; width: clamp(220px, 24vw, 360px); }
+      .cat { right: clamp(-16px, 3vw, 80px); width: clamp(150px, 16vw, 240px); }
+      .pet .fill { fill: var(--green); fill-opacity: .2; stroke: var(--green); stroke-opacity: .6; stroke-width: 2; }
       .pet .accent { fill: var(--green); fill-opacity: .9; }
 
       /* ---------- phone ---------- */
@@ -438,6 +438,7 @@
       }
       body.static .captions .cap {
         position: static; opacity: 1 !important; transform: none !important;
+        left: auto; right: auto; width: 100%; text-align: center;
         margin: 0 0 20px; font-size: clamp(19px, 5.4vw, 26px);
       }
 
@@ -465,17 +466,21 @@
       <div class="stage">
         <div class="glow"></div>
 
-        <!-- dog (left) -->
+        <!-- dog (walking, side profile facing right) -->
         <div class="pet dog" aria-hidden="true">
-          <svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 340 210" xmlns="http://www.w3.org/2000/svg">
             <g>
-              <path class="fill" d="M66 96 C34 96 26 150 44 188 C60 180 72 148 76 116 Z"/>
-              <path class="fill" d="M174 96 C206 96 214 150 196 188 C180 180 168 148 164 116 Z"/>
-              <path class="fill" d="M120 150 C70 150 44 206 44 238 C44 266 78 276 120 276 C162 276 196 266 196 238 C196 206 170 150 120 150 Z"/>
-              <ellipse class="fill" cx="120" cy="112" rx="60" ry="56"/>
-              <ellipse class="fill" cx="120" cy="132" rx="30" ry="24"/>
-              <path class="accent" d="M74 150 Q120 172 166 150 L162 136 Q120 156 78 136 Z"/>
-              <circle class="accent" cx="120" cy="160" r="7"/>
+              <path class="fill" d="M38 108 C10 96 6 66 24 54 C30 74 50 92 66 100 Z"/>
+              <rect class="fill" x="70" y="128" width="22" height="66" rx="11"/>
+              <rect class="fill" x="104" y="132" width="22" height="60" rx="11"/>
+              <path class="fill" d="M60 110 C60 80 90 66 150 66 C210 66 240 78 250 104 C256 122 246 140 210 144 C150 150 96 148 74 138 C64 132 60 122 60 110 Z"/>
+              <rect class="fill" x="196" y="130" width="22" height="64" rx="11"/>
+              <rect class="fill" x="230" y="126" width="22" height="68" rx="11"/>
+              <path class="fill" d="M244 116 C244 78 266 52 296 52 C322 52 334 74 326 98 C320 116 302 128 276 130 Z"/>
+              <path class="fill" d="M318 86 C338 84 346 96 338 108 C332 118 318 118 310 112 Z"/>
+              <path class="fill" d="M270 58 C258 40 268 24 286 28 C280 42 278 54 280 68 Z"/>
+              <path class="accent" d="M262 116 C270 128 284 132 296 129 L292 116 C282 119 270 116 266 106 Z"/>
+              <circle class="accent" cx="280" cy="128" r="5.5"/>
             </g>
           </svg>
         </div>
@@ -617,10 +622,10 @@
 
         <!-- changing captions -->
         <div class="captions">
-          <p class="cap" data-cap="1">One place for every <b>vaccine, vet visit and memory.</b></p>
-          <p class="cap" data-cap="2">Ask anything. <b>Calm, clear guidance</b> — day or night.</p>
-          <p class="cap" data-cap="3">Every <b>good-boy moment,</b> saved.</p>
-          <p class="cap" data-cap="4">Never miss a dose. <b>Vetyco Pro</b> — unlimited AI.</p>
+          <p class="cap side-right" data-cap="chat">Ask anything. <b>Calm, clear guidance</b> — day or night.</p>
+          <p class="cap side-left" data-cap="cal">One place for every <b>vaccine, vet visit and memory.</b></p>
+          <p class="cap side-right" data-cap="gal">Every <b>good-boy moment,</b> saved.</p>
+          <p class="cap side-center" data-cap="pro">Never miss a dose. <b>Vetyco Pro</b> — unlimited AI.</p>
         </div>
 
         <div class="scrollcue"><div class="mouse"></div><span>Scroll</span></div>
@@ -696,57 +701,65 @@
           },
         });
 
-        // initial states
-        gsap.set(phone, { xPercent: -50, yPercent: -50, scale: 0.82, rotationY: 20, rotationX: 6, y: 26, opacity: 0 });
+        // phone left/right offset (responsive)
+        var dx = Math.min(300, window.innerWidth * 0.22);
+        var eio = "power2.inOut";
+
+        // initial states — phone hidden, chat screen ready
+        gsap.set(phone, { xPercent: -50, yPercent: -50, x: 0, y: 26, scale: 0.82, rotationY: -16, rotationZ: 0, opacity: 0 });
         gsap.set(".brand-hero", { y: 0, opacity: 1 });
         gsap.set(".scrollcue", { opacity: 1 });
-        gsap.set(".dog", { x: -360, y: 40, opacity: 0 });
-        gsap.set(".cat", { x: 360, y: 30, opacity: 0 });
-        gsap.set(".screen-chat, .screen-gal, .toast", { opacity: 0 });
-        gsap.set(".screen-cal", { opacity: 1 });
+        gsap.set(".dog", { x: -dx * 1.5, y: 18, opacity: 0 });
+        gsap.set(".cat", { x: 90, y: 26, opacity: 0 });
+        gsap.set(".screen-cal, .screen-gal, .toast", { opacity: 0 });
+        gsap.set(".screen-chat", { opacity: 1 });
 
-        // seg A — hero -> phone arrives
-        tl.to(".scrollcue", { opacity: 0, duration: 0.4 }, 0)
-          .to(".brand-hero", { y: -40, opacity: 0, duration: 1 }, 0)
-          .to(phone, { opacity: 1, scale: 0.9, rotationY: 0, rotationX: 0, y: 0, duration: 1 }, 0.15);
+        // A — hero clears, phone arrives at LEFT showing AI chat (caption right)
+        tl.to(".scrollcue", { opacity: 0, duration: 0.35 }, 0)
+          .to(".brand-hero", { opacity: 0, y: -30, duration: 0.9 }, 0)
+          .to(phone, { opacity: 1, scale: 0.9, x: -dx, rotationY: 12, y: 0, duration: 1, ease: eio }, 0.15)
+          .to(".dog", { x: -dx * 0.25, y: 0, opacity: 1, duration: 1.3, ease: "none" }, 0.3)
+          .to(".cat", { x: 0, y: 0, opacity: 1, duration: 1, ease: eio }, 0.45)
+          .to(".cap[data-cap='chat']", { opacity: 1, duration: 0.6 }, 1.05);
 
-        // seg B — pets slide in + caption 1
-        tl.to(".dog", { x: 0, y: 0, opacity: 1, duration: 1 }, 1)
-          .to(".cat", { x: 0, y: 0, opacity: 1, duration: 1 }, 1.05)
-          .fromTo(".cap[data-cap='1']", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 1.2);
+        // B — phone glides LEFT -> RIGHT, screen chat -> calendar (caption left)
+        tl.to(".cap[data-cap='chat']", { opacity: 0, duration: 0.4 }, 1.8)
+          .to(".screen-chat", { opacity: 0, duration: 0.5 }, 2.0)
+          .to(".screen-cal", { opacity: 1, duration: 0.5 }, 2.0)
+          .to(phone, { x: dx, rotationY: -12, rotationZ: 1.5, duration: 1.2, ease: eio }, 1.9)
+          .to(".dog", { x: dx * 0.2, duration: 1.2, ease: "none" }, 1.9)
+          .to(".dog", { y: -7, duration: 0.6, ease: eio }, 1.9)
+          .to(".dog", { y: 0, duration: 0.6, ease: eio }, 2.5)
+          .to(".cat", { x: -12, duration: 1.2, ease: eio }, 1.9)
+          .to(".cap[data-cap='cal']", { opacity: 1, duration: 0.6 }, 2.7);
 
-        // seg C — calendar -> chat + caption 2
-        tl.to(".cap[data-cap='1']", { opacity: 0, y: -16, duration: 0.5 }, 2)
-          .to(".screen-cal", { opacity: 0, duration: 0.6 }, 2.1)
-          .to(".screen-chat", { opacity: 1, duration: 0.6 }, 2.1)
-          .to(phone, { rotationY: -9, x: 18, duration: 1 }, 2)
-          .to(".cat", { x: 18, duration: 1 }, 2)
-          .to(".dog", { x: -14, duration: 1 }, 2)
-          .fromTo(".cap[data-cap='2']", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 2.4);
+        // C — phone glides RIGHT -> LEFT, screen calendar -> gallery (caption right)
+        tl.to(".cap[data-cap='cal']", { opacity: 0, duration: 0.4 }, 3.4)
+          .to(".screen-cal", { opacity: 0, duration: 0.5 }, 3.6)
+          .to(".screen-gal", { opacity: 1, duration: 0.5 }, 3.6)
+          .to(phone, { x: -dx, rotationY: 12, rotationZ: -1.5, duration: 1.2, ease: eio }, 3.5)
+          .to(".dog", { x: -dx * 0.05, duration: 1.2, ease: "none" }, 3.5)
+          .to(".dog", { y: -7, duration: 0.6, ease: eio }, 3.5)
+          .to(".dog", { y: 0, duration: 0.6, ease: eio }, 4.1)
+          .to(".cat", { x: 4, duration: 1.2, ease: eio }, 3.5)
+          .to(".cap[data-cap='gal']", { opacity: 1, duration: 0.6 }, 4.3);
 
-        // seg D — chat -> gallery + caption 3
-        tl.to(".cap[data-cap='2']", { opacity: 0, y: -16, duration: 0.5 }, 3)
-          .to(".screen-chat", { opacity: 0, duration: 0.6 }, 3.1)
-          .to(".screen-gal", { opacity: 1, duration: 0.6 }, 3.1)
-          .to(phone, { rotationY: 9, x: -18, duration: 1 }, 3)
-          .to(".cat", { x: -6, duration: 1 }, 3)
-          .to(".dog", { x: 6, duration: 1 }, 3)
-          .fromTo(".cap[data-cap='3']", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 3.4);
+        // D — settle to CENTER + reminder toast + Pro caption
+        tl.to(".cap[data-cap='gal']", { opacity: 0, duration: 0.4 }, 5.0)
+          .to(".screen-gal", { opacity: 0, duration: 0.5 }, 5.2)
+          .to(".screen-cal", { opacity: 1, duration: 0.5 }, 5.2)
+          .to(".toast", { opacity: 1, duration: 0.5 }, 5.4)
+          .to(phone, { x: 0, rotationY: 0, rotationZ: 0, scale: 0.87, duration: 1, ease: eio }, 5.0)
+          .to(".dog", { x: -dx * 0.5, opacity: 0.5, duration: 1, ease: eio }, 5.2)
+          .to(".cat", { x: 26, opacity: 0.5, duration: 1, ease: eio }, 5.2)
+          .to(".cap[data-cap='pro']", { opacity: 1, duration: 0.6 }, 5.5);
 
-        // seg E — gallery -> calendar + reminder toast + caption 4
-        tl.to(".cap[data-cap='3']", { opacity: 0, y: -16, duration: 0.5 }, 4)
-          .to(".screen-gal", { opacity: 0, duration: 0.6 }, 4.1)
-          .to(".screen-cal", { opacity: 1, duration: 0.6 }, 4.1)
-          .fromTo(".toast", { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.6 }, 4.4)
-          .to(phone, { rotationY: 0, x: 0, duration: 1 }, 4)
-          .fromTo(".cap[data-cap='4']", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 4.5);
+        // E — clear before CTA hand-off
+        tl.to(".cap[data-cap='pro']", { opacity: 0, duration: 0.5 }, 6.2)
+          .to(".toast", { opacity: 0, duration: 0.5 }, 6.2);
 
-        // seg F — settle / hand-off to CTA
-        tl.to(".cap[data-cap='4']", { opacity: 0, y: -16, duration: 0.6 }, 5.1)
-          .to(".toast", { opacity: 0, duration: 0.5 }, 5.1)
-          .to(phone, { scale: 0.86, y: 10, duration: 1 }, 5)
-          .to(".dog", { x: -40, y: 30, opacity: 0.6, duration: 1 }, 5)
-          .to(".cat", { x: 40, y: 24, opacity: 0.6, duration: 1 }, 5);
+        // re-measure once everything (CDN scripts, fonts, layout) has settled
+        window.addEventListener("load", function () { ScrollTrigger.refresh(); });
       }
     </script>
   </body>
