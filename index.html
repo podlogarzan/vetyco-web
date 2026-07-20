@@ -147,21 +147,31 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(280px, 32vw, 440px);
+        width: clamp(260px, 26vw, 380px);
         margin: 0;
         opacity: 0;
         color: var(--white);
-        font-size: clamp(22px, 3vw, 40px);
+        font-size: clamp(21px, 2.5vw, 34px);
         font-weight: 700;
         line-height: 1.18;
         letter-spacing: -0.02em;
         text-shadow: 0 2px 34px rgba(0,0,0,.7);
       }
-      .cap.side-right { right: clamp(26px, 6vw, 96px); text-align: left; }
-      .cap.side-left  { left: clamp(26px, 6vw, 96px);  text-align: left; }
+      .cap.side-right { left: calc(50% + 60px); text-align: left; }
+      .cap.side-left  { right: calc(50% + 60px); text-align: left; }
       .cap.side-center {
-        left: 50%; width: min(600px, 88vw);
+        left: 50%; width: min(560px, 88vw);
         transform: translate(-50%, -50%); text-align: center;
+      }
+      .cap .sub {
+        display: block;
+        margin-top: 14px;
+        font-size: clamp(13.5px, 1.15vw, 16.5px);
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0;
+        color: #b4b4bd;
+        text-shadow: 0 1px 14px rgba(0,0,0,.8);
       }
       .captions .cap b { color: var(--green); font-weight: 700; }
 
@@ -623,10 +633,10 @@
 
         <!-- changing captions -->
         <div class="captions">
-          <p class="cap side-right" data-cap="chat">Ask anything. <b>Calm, clear guidance</b> — day or night.</p>
-          <p class="cap side-left" data-cap="cal">One place for every <b>vaccine, vet visit and memory.</b></p>
-          <p class="cap side-right" data-cap="gal">Every <b>good-boy moment,</b> saved.</p>
-          <p class="cap side-center" data-cap="pro">Never miss a dose. <b>Vetyco Pro</b> — unlimited AI.</p>
+          <p class="cap side-right" data-cap="chat">Ask anything. <b>Calm, clear guidance</b> — day or night.<span class="sub">Describe it in your own words, or send a photo. Vetyco asks the right follow-up questions, tells you what can wait and what can't — then quietly logs it to your pet's record.</span></p>
+          <p class="cap side-left" data-cap="cal">One place for every <b>vaccine, vet visit and memory.</b><span class="sub">Vaccinations, medications, vet visits and notes on one timeline — per pet, with breed, birthday and weight. Add an entry in two taps, photo included.</span></p>
+          <p class="cap side-right" data-cap="gal">Every <b>good-boy moment,</b> saved.<span class="sub">Photos grouped by month, right next to the passport, vaccination card and lab results. At the vet, the whole history is already in your pocket.</span></p>
+          <p class="cap side-center" data-cap="pro">Never miss a dose. <b>Reminders that actually land.</b><span class="sub">Get nudged an hour, a day or a week before a booster or dose is due. Free forever with 10 AI messages a day — Pro is €7/month for unlimited, cancel anytime.</span></p>
         </div>
 
         <div class="scrollcue"><div class="mouse"></div><span>Scroll</span></div>
