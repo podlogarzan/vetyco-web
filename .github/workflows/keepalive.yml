@@ -1,0 +1,31 @@
+name: Supabase keep-alive
+
+# Supabase pauses free-tier projects after roughly 7 days without activity, which
+# would take the whole Vetyco app offline, sign-in included. One request a day
+# keeps the backend awake.
+#
+# The key below is the *publishable* Supabase key. It is meant to be public and
+# already ships inside the Android app; Row Level Security is what protects the
+# data. An anonymous read of `pets` therefore returns an empty array, which is
+# exactly what we want here: real activity, zero data exposure.
+
+on:
+  schedule:
+    - cron: '17 6 * * *' # every day at 06:17 UTC
+  workflow_dispatch: # also runnable by hand from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          SUPABASE_URL: https://hfcshvzzeunjsuvxtjwm.supabase.co
+          SUPABASE_KEY: sb_publishable_Dc0RMf9r3WzzoAUJtfhh8g_mnrQnPQl
+        run: |
+          url="$SUPABASE_URL/rest/v1/pets?select=id&limit=1"
+          code=$(curl -sS -o /tmp/body.txt -w '%{http_code}' -H "apikey: $SUPABASE_KEY" -H "Authorization: Bearer $SUPABASE_KEY" "$url")
+          echo "HTTP $code"
+          cat /tmp/body.txt
+          echo
+          test "$code" = "200"
