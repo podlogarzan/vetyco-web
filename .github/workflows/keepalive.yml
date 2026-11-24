@@ -9,10 +9,21 @@ name: Supabase keep-alive
 # data. An anonymous read of `pets` therefore returns an empty array, which is
 # exactly what we want here: real activity, zero data exposure.
 
+# Two failure modes bit us between 2026-09-12 and 2026-11-24, and both are handled below.
+#   1. Once Supabase actually pauses, its hostname stops resolving, so this ping can only
+#      PREVENT a pause, never undo one. 36 runs failed with "Could not resolve host" and
+#      nobody noticed. Treat a red run here as "the backend is already down".
+#   2. GitHub disables a scheduled workflow after 60 days without a commit to the repo
+#      (status `disabled_inactivity`), which is what finally silenced it. The stamp step
+#      below writes a dated file so the repo never goes stale.
+
 on:
   schedule:
     - cron: '17 6 * * *' # every day at 06:17 UTC
   workflow_dispatch: # also runnable by hand from the Actions tab
+
+permissions:
+  contents: write # needed only for the staleness stamp below
 
 jobs:
   ping:
@@ -29,3 +40,15 @@ jobs:
           cat /tmp/body.txt
           echo
           test "$code" = "200"
+
+      - name: Keep the repo from going stale
+        uses: actions/checkout@v4
+      - name: Stamp the last successful ping
+        run: |
+          date -u +'%Y-%m-%d' > .keepalive
+          if ! git diff --quiet .keepalive; then
+            git config user.name  'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git commit -am "Keep-alive stamp $(cat .keepalive)"
+            git push
+          fi
