@@ -46,7 +46,8 @@ jobs:
       - name: Stamp the last successful ping
         run: |
           date -u +'%Y-%m-%d' > .keepalive
-          if ! git diff --quiet .keepalive; then
+          git add .keepalive            # it starts untracked, and `git diff` is blind to that
+          if ! git diff --cached --quiet .keepalive; then
             git config user.name  'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git commit -am "Keep-alive stamp $(cat .keepalive)"
